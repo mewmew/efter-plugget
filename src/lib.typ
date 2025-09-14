@@ -1,4 +1,4 @@
-#import "@local/latex-lookalike:0.1.4"
+#import "@preview/latex-lookalike:0.1.4"
 
 #import "@preview/nth:1.0.1": nth
 

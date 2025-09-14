@@ -1,6 +1,4 @@
-#import "@local/uni-report:0.1.0"
-
-#import "@local/latex-lookalike:0.1.4"
+#import "@preview/uni-report:0.1.0"
 
 #show: uni-report.template.with(
 	logo:           image("inc/logo.png", width: 4.3cm),
@@ -19,15 +17,12 @@
 
 // === [ quote ] ===============================================================
 
-#block(
-	inset: (x: 3em),
-	quote(
-		block: true,
-		attribution: [anonymous],
-	)[
-		#emph["Chemistry is all around us."]
-	]
-)
+#quote(
+	block: true,
+	attribution: [anonymous],
+)[
+	#emph["Chemistry is all around us."]
+]
 
 // === [ Introduction ] ========================================================
 
@@ -82,8 +77,3 @@ $ 2"H"_2 + 2"O" #sym.arrow 2"H"_(2)"O" $
 #bibliography("references.bib")
 
 #pagebreak(weak: true)
-
-// === [ Appendices ] ==========================================================
-
-// Style appendices with "A.1" numbering and "Appendix" supplement.
-//#show: latex-lookalike.style-appendices
