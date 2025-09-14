@@ -4,10 +4,11 @@ version = "0.1.0"
 entrypoint = "src/lib.typ"
 authors = ["Robin Eklind"]
 license = "0BSD"
-description = "Lab report template for Typst."
+description = "Lab report, essay and exam template for Uni."
 exclude = ["inc"]
-repository = "https://github.com/mewmew/uni-report"
+repository = "https://github.com/mewmew/uni-report-typ"
 
 [template]
 path = "template"
 entrypoint = "report.typ"
+thumbnail = "inc/thumbnail.png"
