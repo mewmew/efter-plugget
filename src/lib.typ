@@ -48,18 +48,8 @@
 	// Set default font.
 	set text(font: "New Computer Modern")
 
-	set text(size: 1.05em)
-
-	set par(justify: true)
-
-	// Use arabic numbering of headings.
-	set heading(numbering: "1.1")
-
-	// Style outline as LaTeX "Table of contents".
-	show outline: latex-lookalike.style-outline
-
-	// Style headings with "1.1" numbering and increased spacing.
-	show heading: latex-lookalike.style-heading
+	// Style outline, headings, lists and quotes using the style of LaTeX.
+	show: latex-lookalike.style
 
 	// Style links and citations.
 	let linkblue = rgb(66, 93, 178)
