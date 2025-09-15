@@ -5,7 +5,7 @@
 // This function gets your whole document as its `body` and formats it as a lab
 // report.
 #let template(
-	logo:           image("../inc/default_logo.png", width: 4.3cm),
+	logo:           image("/inc/default_logo.png", width: 4.3cm),
 	title:          "Lab report",
 	sub-title:      none,
 	short-title:    none,
