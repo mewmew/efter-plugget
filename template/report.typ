@@ -1,6 +1,6 @@
-#import "@preview/uni-report:0.1.0"
+#import "@preview/efter-plugget:0.1.0"
 
-#show: uni-report.template.with(
+#show: efter-plugget.template.with(
 	logo:           image("inc/logo.png", width: 4.3cm),
 	title:          highlight[Lab 1 -- Experiment],
 	short-title:    highlight("Lab 1"),

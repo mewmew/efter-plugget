@@ -1,10 +1,10 @@
-# Lab report, essay and exam template for Uni
+# Lab report, essay and exam template for Typst
 
 ## Example document
 
 ```bash
 # Generate new report based on template.
-typst init @preview/uni-report
+typst init @preview/efter-plugget
 ```
 
 ![Example lab report](inc/thumbnail.png)
