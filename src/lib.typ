@@ -1,29 +1,35 @@
 #import "@preview/latex-lookalike:0.1.4"
+#import "@preview/hallon:0.1.2"
 
 #import "@preview/nth:1.0.1": nth
 
-// This function gets your whole document as its `body` and formats it as a lab
-// report.
+// template formats the document as a lab report, essay or exam.
 #let template(
-	logo:           image("/inc/default_logo.png", width: 4.3cm),
-	title:          "Lab report",
-	sub-title:      none,
-	short-title:    none,
-	course-name:    none,
-	course-code:    none,
-	course-part:    none,
-	lab-name:       none,
-	author:         none,
-	lab-partners:   none,
-	lab-supervisor: none,
-	lab-group:      none,
-	lab-date:       none,
+	logo:              image("/inc/default_logo.png"),
+	title:             "Lab report",
+	subtitle:          none,
+	page-header-title: none,
+	course-name:       none,
+	course-code:       none,
+	course-part:       none,
+	lab-name:          none,
+	authors:           none,
+	lab-partners:      none,
+	lab-supervisor:    none,
+	lab-group:         none,
+	lab-date:          none,
 
 	// Report contents.
 	body,
 ) = {
 	// Set document metadata.
 	set document(title: title)
+
+	// support both array and string type for authors.
+	let authors-str = authors
+	if authors.has("join") {
+		authors-str = authors.join(", ", last: " and ")
+	}
 
 	// Set page size and margins.
 	set page(
@@ -37,9 +43,9 @@
 				// left
 				course-code,
 				// middle
-				short-title,
+				page-header-title,
 				//right
-				author,
+				authors-str,
 				grid.hline(stroke: 0.4pt),
 			)
 		},
@@ -52,34 +58,21 @@
 	show: latex-lookalike.style
 
 	// Style links and citations.
-	let linkblue = rgb(66, 93, 178)
-	show link: it => {
-		set text(fill: linkblue) if type(it.dest) == str // style external links
-		it
-	}
+	let linkblue = blue
+	show ref: set text(fill: linkblue)
 	show cite: set text(fill: linkblue)
 
-	// raw figures
+	// Place table and listing captions at top.
+	show figure.where(kind: table): set figure.caption(position: top)
 	show figure.where(kind: raw): set figure.caption(position: top)
 
-	show figure: outer => {
-		let alignment = left
-		if outer.kind == table or outer.kind == raw {
-			alignment = center
-		}
-		show figure.caption: it => align(
-			alignment,
-			[
-				#strong[#it.supplement #context it.counter.display(it.numbering)#it.separator]
-				#it.body
-			]
-		)
-		outer
-	}
+	// Style figures and subfigures.
+	show: hallon.style-figures
 
+	// Set title of bibliography.
 	set bibliography(title: "References")
 
-	// === [ Front matter ] =====================================================
+	// === [ Frontmatter ] ======================================================
 
 	// --- [ Front page ] -------------------------------------------------------
 
@@ -93,7 +86,10 @@
 			gutter: 3pt,
 			grid.vline(x: 1, stroke: 0.4pt + black),
 			// left cell (logo)
-			logo,
+			{
+				set image(width: 4.3cm)
+				logo
+			},
 			// right cell (title)
 			block(height: 100%, inset: 2.1em)[
 				#v(6.1cm)
@@ -104,7 +100,7 @@
 				#text(size: 2.1em, weight: "bold", title)
 
 				// subtitle
-				#if sub-title != none { v(-1.5em) + text(size: 1.5em, weight: "bold", sub-title) }
+				#if subtitle != none { v(-1.5em) + text(size: 1.5em, weight: "bold", subtitle) }
 
 				// date
 				#text(size: 1.2em, {
@@ -128,13 +124,33 @@
 					cells.push([Lab:])
 					cells.push([#lab-name])
 				}
-				#if author != none {
-					cells.push([Author:])
-					cells.push([#author])
+				#if authors != none {
+					// support both array and string type for authors.
+					if type(authors) != array {
+						cells.push([Author:])
+						cells.push([#authors])
+					} else {
+						if authors.len() > 1 {
+							cells.push([Authors:])
+						} else {
+							cells.push([Author:])
+						}
+						cells.push([#authors.join(", ", last: " and ")])
+					}
 				}
 				#if lab-partners != none {
-					cells.push([Lab partner(s):])
-					cells.push([#lab-partners.join(", ", last: " and ")])
+					// support both array and string type for lab partners.
+					if type(lab-partners) != array {
+						cells.push([Lab partner:])
+						cells.push([#lab-partners])
+					} else {
+						if lab-partners.len() > 1 {
+							cells.push([Lab partners:])
+						} else {
+							cells.push([Lab partner:])
+						}
+						cells.push([#lab-partners.join(", ", last: " and ")])
+					}
 				}
 				#if lab-supervisor != none {
 					cells.push([Lab supervisor:])
@@ -169,6 +185,8 @@
 	outline()
 	pagebreak(weak: true)
 
+	// Style all links after outline.
+	show link: set text(fill: linkblue)
 
 	// --- [ Main matter ] ------------------------------------------------------
 
