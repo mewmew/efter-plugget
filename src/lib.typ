@@ -27,7 +27,7 @@
 
 	// support both array and string type for authors.
 	let authors-str = authors
-	if authors.has("join") {
+	if type(authors) == array {
 		authors-str = authors.join(", ", last: " and ")
 	}
 
