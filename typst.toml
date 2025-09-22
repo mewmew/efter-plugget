@@ -7,7 +7,7 @@ license = "0BSD"
 description = "Lab report, essay and exam template for Typst."
 repository = "https://github.com/mewmew/efter-plugget"
 categories = ["report"]
-exclude = ["inc"]
+exclude = ["/inc"]
 
 [template]
 path = "template"
