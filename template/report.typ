@@ -1,4 +1,4 @@
-#import "@preview/efter-plugget:0.1.0"
+#import "@preview/efter-plugget:0.1.1"
 
 #let todo = highlight
 
